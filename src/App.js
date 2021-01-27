@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Header from "./components/ui/Header";
 import axios from "axios";
+//components
+import Pagination from "./components/ui/Pagination";
 import CharacterGrid from "./components/characters/CharacterGrid";
 import Search from "./components/ui/Search";
-import "./App.css";
+//style
+import "./App.scss";
 
 const App = () => {
   //items
@@ -12,42 +15,58 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   //search
   const [query, setQuery] = useState("");
-  // current page
-  const [currentPage, setCurrentPage] = useState(1);
   // character by page
   const [charactersPerPage, setCharactersPerPage] = useState(1);
   // total
-  const [totalCharacters, setTotalCharacters] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [numberOfCharacters, setNumberOfCharacters] = useState(1);
 
-  //items from API
+  //console.log(query);
+  //items
   useEffect(() => {
     const fecthItems = async () => {
-      const result = query
-        ? await axios.get(
-            `https://rickandmortyapi.com/api/character?name=${query}`
-          )
-        : await axios.get(
-            `https://rickandmortyapi.com/api/character/?page=${currentPage}`
-          );
+      const result = await axios.get(
+        `https://rickandmortyapi.com/api/character/?page=${currentPage}`
+      );
 
       setItems(result.data.results);
       setCharactersPerPage(result.data.results.length);
-      setTotalCharacters(result.data.info.count);
+      setNumberOfCharacters(result.data.info.count);
       setIsLoading(false);
     };
 
     fecthItems();
-  }, [query, currentPage]);
+  }, [currentPage]);
 
-  //console.log(items);
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  //items
+  useEffect(() => {
+    const fecthQuery = async () => {
+      const result = await axios.get(
+        `https://rickandmortyapi.com/api/character?name=${query}`
+      );
+      setItems(result.data.results);
+      setCharactersPerPage(result.data.results.length);
+      setNumberOfCharacters(result.data.info.count);
+      setIsLoading(false);
+    };
+
+    fecthQuery();
+  }, [query]);
+
+  //click pagination
+  const handleClick = (page) => setCurrentPage(page);
 
   return (
     <div className="container">
       <Header />
       <Search getQuery={(q) => setQuery(q)} />
       <CharacterGrid isLoading={isLoading} items={items} />
+      <Pagination
+        currentPage={currentPage}
+        handleClick={handleClick}
+        numberOfCharacters={numberOfCharacters}
+        charactersPerPage={charactersPerPage}
+      />
     </div>
   );
 };

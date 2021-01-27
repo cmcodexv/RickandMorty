@@ -135,3 +135,50 @@ input[type="text"] {
     grid-template-columns: 1fr;
   }
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  padding: 50px;
+  ul {
+    list-style: none;
+    padding: 0px;
+    display: flex;
+
+    li {
+      background: #714eaa;
+      padding: 10px 15px;
+      margin-right: 4px;
+      border-radius: 4px;
+      font-family: sans-serif;
+      color: #fff;
+      font-size: 1.1rem;
+      min-width: 20px;
+      text-align: center;
+      user-select: none;
+
+      &:last-child {
+        margin-right: 0px;
+      }
+
+      &:not(.active):not(.disabled) {
+        cursor: pointer;
+      }
+      &:not(.active):not(.disabled):hover {
+        background: #97ce4c;
+      }
+      &:not(.active):not(.disabled):active {
+        background: #97ce4c;
+      }
+
+      &.active {
+        background: #97ce4c;
+      }
+      &.disabled {
+        background: #44281d;
+        pointer-events: none;
+      }
+    }
+  }
+}
