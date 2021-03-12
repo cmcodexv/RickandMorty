@@ -19,39 +19,37 @@ const App = () => {
   const [charactersPerPage, setCharactersPerPage] = useState(1);
   // total
   const [currentPage, setCurrentPage] = useState(1);
+  //numbers of characters
   const [numberOfCharacters, setNumberOfCharacters] = useState(1);
-
-  //console.log(query);
-  //items
-  useEffect(() => {
-    const fecthItems = async () => {
-      const result = await axios.get(
-        `https://rickandmortyapi.com/api/character/?page=${currentPage}`
-      );
-
-      setItems(result.data.results);
-      setCharactersPerPage(result.data.results.length);
-      setNumberOfCharacters(result.data.info.count);
-      setIsLoading(false);
-    };
-
-    fecthItems();
-  }, [currentPage]);
+  //numbers of pages
+  const [numberOfPages, setNumberOfPages] = useState(1);
 
   //items
   useEffect(() => {
-    const fecthQuery = async () => {
-      const result = await axios.get(
-        `https://rickandmortyapi.com/api/character?name=${query}`
-      );
-      setItems(result.data.results);
-      setCharactersPerPage(result.data.results.length);
-      setNumberOfCharacters(result.data.info.count);
-      setIsLoading(false);
-    };
-
-    fecthQuery();
-  }, [query]);
+    if (query !== "") {
+      axios
+        .get(`https://rickandmortyapi.com/api/character?name=${query}`)
+        .then(function (response) {
+          const { data } = response;
+          setItems(data.results);
+          setCharactersPerPage(data.results.length);
+          setNumberOfCharacters(data.info.count);
+          setNumberOfPages(data.info.pages);
+          setIsLoading(false);
+        });
+    } else {
+      axios
+        .get(`https://rickandmortyapi.com/api/character/?page=${currentPage}`)
+        .then(function (response) {
+          const { data } = response;
+          setItems(data.results);
+          setCharactersPerPage(data.results.length);
+          setNumberOfPages(data.info.pages);
+          setNumberOfCharacters(data.info.count);
+          setIsLoading(false);
+        });
+    }
+  }, [currentPage, query]);
 
   //click pagination
   const handleClick = (page) => setCurrentPage(page);
@@ -65,6 +63,7 @@ const App = () => {
         currentPage={currentPage}
         handleClick={handleClick}
         numberOfCharacters={numberOfCharacters}
+        numberOfPages={numberOfPages}
         charactersPerPage={charactersPerPage}
       />
     </div>

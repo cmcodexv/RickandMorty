@@ -1,15 +1,9 @@
 //helper
 import createPagination from "./helpers/CreatePagination";
 
-const Pagination = ({
-  currentPage,
-  handleClick,
-  numberOfCharacters,
-  charactersPerPage,
-}) => {
+const Pagination = ({ currentPage, numberOfPages, handleClick }) => {
   const { pagination } = createPagination({
-    numberOfCharacters: numberOfCharacters,
-    charactersPerPage: charactersPerPage,
+    numberOfPages,
     numberOfButtons: 8,
     currentPage,
   });

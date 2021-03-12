@@ -1,12 +1,5 @@
 const createPagination = (params) => {
-  const {
-    numberOfCharacters,
-    charactersPerPage,
-    currentPage,
-    numberOfButtons,
-  } = params;
-
-  const numberOfPages = Math.ceil(numberOfCharacters / charactersPerPage);
+  const { numberOfPages, currentPage, numberOfButtons } = params;
 
   if (currentPage > numberOfPages || currentPage < 1)
     return {
