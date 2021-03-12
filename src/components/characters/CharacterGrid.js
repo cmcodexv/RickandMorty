@@ -3,7 +3,7 @@ import CharacterItem from "./CharacterItem";
 import Spinner from "../ui/Spinner";
 
 const CharacterGrid = ({ items, isLoading }) => {
-  //console.log(isLoading);
+  console.log(items);
   return isLoading ? (
     <Spinner />
   ) : (
