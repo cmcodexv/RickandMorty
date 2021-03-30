@@ -1,9 +1,5 @@
 # List of Rick and Morty's Characters in ReactJS
 
-Project: List of Rick and Morty's Characters in ReactJS from official API
-
-Author: [Carlos Maradiaga](https://instagram.com/carlosmxv) 
-
 Official Documentation:
 * [React](https://reactjs.org/)
 * [Rick and Morty API](https://rickandmortyapi.com/documentation)
